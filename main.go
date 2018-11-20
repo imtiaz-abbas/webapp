@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 	"os"
-
+	"github.com/webapp/controllers"
 	"github.com/gin-gonic/gin"
 	_ "github.com/heroku/x/hmetrics/onload"
 )
@@ -15,11 +15,10 @@ func main() {
 		log.Fatal("$PORT must be set")
 	}
 
-	router := gin.New()
+	router := gin.Default()
 	router.Use(gin.Logger())
-	router.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{"message": "ok"})
-	})
+	router.GET("/products", controllers.GetAllProducts)
+	router.GET("/products/:id", controllers.GetProduct)
 
 	router.Run(":" + port)
 }
