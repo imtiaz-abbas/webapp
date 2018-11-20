@@ -1,1 +1,1 @@
-web: go run src/cmds/main.go
+web: go run main.go
