@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// Order Information
 type Order struct {
 	ID              string    `json:"id"`
 	UserID          string    `json:"userId"`

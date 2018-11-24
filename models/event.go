@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// Event Information
 type Event struct {
 	ID          string    `json:"id"`
 	Title       string    `json:"title"`

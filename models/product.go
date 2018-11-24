@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// Product Information
 type Product struct {
 	ID               string      `json:"id"`
 	Name             string      `json:"name"`
@@ -57,6 +58,7 @@ func getProducts() []Product {
 	return allProducts
 }
 
+// GetProduct gets a product by id
 func (product *Product) GetProduct(id string) int {
 	allProducts := getProducts()
 	statusCode := 0
@@ -69,6 +71,7 @@ func (product *Product) GetProduct(id string) int {
 	return statusCode
 }
 
+// GetAllProducts func gets all the products in the database
 func GetAllProducts() (int, []Product) {
 	allProducts := getProducts()
 	return 1, allProducts

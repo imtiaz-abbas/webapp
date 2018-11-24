@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// Review Information
 type Review struct {
 	ID        string    `json:"id"`
 	Title     string    `json:"title"`

@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// Blog holds the basic information about blog
 type Blog struct {
 	ID        string    `json:"id"`
 	Title     string    `json:"title"`
