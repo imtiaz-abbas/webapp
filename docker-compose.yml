@@ -1,0 +1,12 @@
+version: "2"
+
+services:
+  webapp:
+    image: golang:latest
+    volumes:
+      - .:/go/src/github.com/webapp
+    command: go run main.go
+    working_dir: /go/src/github.com/webapp
+    ports:
+      - "8080:8080"
+      - "5000:5000"
