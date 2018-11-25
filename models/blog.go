@@ -9,7 +9,7 @@ type Blog struct {
 	ID        string    `json:"id"`
 	Title     string    `json:"title"`
 	Article   string    `json:"article"`
-	Images    []string  `json:"images"`
-	Videos    []string  `json:"videos"`
+	Images    []string  `json:"images" gorm:"type:varchar(64)[]"`
+	Videos    []string  `json:"videos" gorm:"type:varchar(64)[]"`
 	CreatedAt time.Time `json:"createdAt"`
 }

@@ -10,12 +10,12 @@ type Product struct {
 	Name             string      `json:"name"`
 	Description      string      `json:"description"`
 	Category         Category    `json:"category"`
-	Images           []string    `json:"images"`
+	Images           []string    `json:"images" gorm:"type:varchar(64)[]"`
 	Value            int         `json:"value"`
 	Weight           float64     `json:"weight"`
 	UnavailableDates []time.Time `json:"unavailableDates"`
 	TotalRating      float64     `json:"totalRating"`
-	Reviews          []Review    `json:"reviews"`
+	// Reviews          []Review    `json:"reviews"`
 }
 
 func getProducts() []Product {
@@ -35,7 +35,7 @@ func getProducts() []Product {
 			Weight:           0.4,
 			UnavailableDates: nil,
 			TotalRating:      3.8,
-			Reviews:          nil,
+			// Reviews:          nil,
 		},
 		Product{
 			ID:          "0002",
@@ -52,7 +52,7 @@ func getProducts() []Product {
 			Weight:           1.6,
 			UnavailableDates: nil,
 			TotalRating:      4.5,
-			Reviews:          nil,
+			// Reviews:          nil,
 		},
 	}
 	return allProducts

@@ -8,9 +8,10 @@ import (
 type Review struct {
 	ID        string    `json:"id"`
 	Title     string    `json:"title"`
-	Images    []string  `json:"images"`
+	Images    []string  `json:"images" gorm:"type:varchar(64)[]"`
 	Review    string    `json:"review"`
 	CreatedAt time.Time `json:"createdAt"`
 	Rating    int       `json:"rating"`
 	UserID    string    `json:"userId"`
+	BlogID    string    `json:"blogId"`
 }
