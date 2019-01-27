@@ -1,14 +1,14 @@
 version: "3"
 
 services:
-  # db:
-  #   image: postgres:latest
-  #   ports:
-  #       - "5432:5432"
-  #   environment:
-  #       - POSTGRES_USER=postgres
-  #       - POSTGRES_PASSWORD=pasword
-  #       - POSTGRES_DB= travel_on_rent
+  db:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${DBUSER}
+      - POSTGRES_PASSWORD=${DBPASSWORD}
+      - POSTGRES_DB=${DBNAME}
 
   webapp:
     image: golang:latest
@@ -20,5 +20,5 @@ services:
     ports:
       - "8080:8080"
       - "5000:5000"
-    # depends_on:
-    #   - db
+    depends_on:
+      - db

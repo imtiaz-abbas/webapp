@@ -10,7 +10,7 @@ type Product struct {
 	Name             string      `json:"name"`
 	Description      string      `json:"description"`
 	Category         Category    `json:"category"`
-	Images           []string    `json:"images" gorm:"type:varchar(64)[]"`
+	Images           []string    `json:"images" gorm:"type:text[]"`
 	Value            int         `json:"value"`
 	Weight           float64     `json:"weight"`
 	UnavailableDates []time.Time `json:"unavailableDates"`
