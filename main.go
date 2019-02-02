@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"strconv"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/heroku/x/hmetrics/onload"
@@ -45,77 +44,20 @@ func main() {
 	if port == "" {
 		port = "8080"
 	}
-	db.CreateTable(&models.User{})
-	fmt.Println("CREATED USER TABEL")
-	db.CreateTable(&models.Blog{})
-	fmt.Println("CREATED BLOG TABEL")
-	db.CreateTable(&models.Product{})
-	fmt.Println("CREATED PRODUCT TABEL")
-	db.CreateTable(&models.Category{})
-	fmt.Println("CREATED CATEGORY TABEL")
-	db.CreateTable(&models.Event{})
-	fmt.Println("CREATED EVENT TABEL")
-	db.CreateTable(&models.Order{})
-	fmt.Println("CREATED ORDER TABEL")
-	db.CreateTable(&models.Review{})
-	fmt.Println("CREATED REVIEW TABEL")
-
-	product1 := models.Product{
-		ID:               "0001",
-		Name:             "Gopro",
-		Description:      "This is the description for gopro",
-		Images:           []string{"something", "something else"},
-		Value:            26000,
-		Weight:           0.4,
-		UnavailableDates: []time.Time{},
-		TotalRating:      3.8,
-	}
-	product2 := models.Product{
-		ID:               "0002",
-		Name:             "Gimbal",
-		Description:      "This is the description for Gimbal",
-		Images:           []string{},
-		Value:            32000,
-		Weight:           0.8,
-		UnavailableDates: []time.Time{},
-		TotalRating:      3.8,
-	}
-	product3 := models.Product{
-		ID:               "0003",
-		Name:             "Helmet",
-		Description:      "This is the description for Helmet",
-		Images:           []string{},
-		Value:            11000,
-		Weight:           1.5,
-		UnavailableDates: []time.Time{},
-		TotalRating:      4.8,
-	}
-	product4 := models.Product{
-		ID:               "0004",
-		Name:             "Trekking Bag",
-		Description:      "This is the description for Trekking Bag",
-		Images:           []string{},
-		Value:            1800,
-		Weight:           0.7,
-		UnavailableDates: []time.Time{},
-		TotalRating:      3.2,
-	}
-	product5 := models.Product{
-		ID:               "0005",
-		Name:             "Trekking Pole",
-		Description:      "This is the description for Trekking Pole",
-		Images:           []string{},
-		Value:            1200,
-		Weight:           0.6,
-		UnavailableDates: []time.Time{},
-		TotalRating:      4.2,
-	}
-
-	db.Create(&product1)
-	db.Create(&product2)
-	db.Create(&product3)
-	db.Create(&product4)
-	db.Create(&product5)
+	db.DropTableIfExists(&models.User{})
+	fmt.Println("DELETED USER TABEL")
+	db.DropTableIfExists(&models.Blog{})
+	fmt.Println("DELETED BLOG TABEL")
+	db.DropTableIfExists(&models.Product{})
+	fmt.Println("DELETED PRODUCT TABEL")
+	db.DropTableIfExists(&models.Category{})
+	fmt.Println("DELETED CATEGORY TABEL")
+	db.DropTableIfExists(&models.Event{})
+	fmt.Println("DELETED EVENT TABEL")
+	db.DropTableIfExists(&models.Order{})
+	fmt.Println("DELETED ORDER TABEL")
+	db.DropTableIfExists(&models.Review{})
+	fmt.Println("DELETED REVIEW TABEL")
 
 	router := gin.Default()
 	router.Use(gin.Logger())
