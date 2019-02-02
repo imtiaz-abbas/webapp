@@ -17,14 +17,15 @@ func main() {
 		port = "8080"
 	}
 
-	db.Get().DropTableIfExists(&models.Product{}, &models.Image{})
-	db.Get().CreateTable(&models.Product{}, &models.Image{})
+	db.Get().DropTableIfExists(&models.Product{}, &models.Category{})
+	db.Get().CreateTable(&models.Product{}, &models.Category{})
 
 	router := gin.Default()
 	router.Use(gin.Logger())
 	router.GET("/", func(c *gin.Context) { c.JSON(200, gin.H{"message": "OK"}) })
 	router.GET("/products", controllers.GetAllProducts)
-	router.POST("/admin/add_products", controllers.AddProducts)
+	router.POST("/admin/add_product", controllers.AddProduct)
+	router.POST("/admin/add_category", controllers.AddCategory)
 
 	router.Run(":" + port)
 }

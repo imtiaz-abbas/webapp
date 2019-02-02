@@ -1,9 +1,13 @@
 package controllers
 
 import (
-	"github.com/satori/go.uuid"
+	"fmt"
+
+	"github.com/webapp/concerns"
+	"github.com/webapp/utilities"
 
 	"github.com/gin-gonic/gin"
+	"github.com/satori/go.uuid"
 	"github.com/webapp/db"
 	"github.com/webapp/models"
 )
@@ -13,40 +17,35 @@ func GetAllProducts(c *gin.Context) {
 	c.JSON(200, gin.H{"message": "got request"})
 }
 
+// AddProductsRequestBody type
 type AddProductsRequestBody struct {
 	Products []ProductRequestBody `json:"products"`
 }
 
+// ProductRequestBody TYPE
 type ProductRequestBody struct {
-	Name        string `json:"name"`
-	Price       int    `json:"price"`
-	Description string `json:"description"`
+	concerns.Storable
+	Name        string            `json:"name"`
+	Price       int               `json:"price"`
+	Description string            `json:"description"`
+	CategoryID  uuid.UUID         `json:"category_id"`
+	Quantity    int               `json:"quantity"`
+	Status      string            `json:"status"`
+	Locations   []models.Location `json:"locations"`
 }
 
-// AddProducts method
-func AddProducts(c *gin.Context) {
-	request := &AddProductsRequestBody{}
-	c.Bind(&request)
-
-	products := make([]models.Product, 0)
-
-	for _, reqProduct := range request.Products {
-		product := models.Product{}
-		product.Name = reqProduct.Name
-		product.Price = reqProduct.Price
-		id, err := uuid.NewV4()
-		if err != nil {
-			c.JSON(400, gin.H{"message": "something went wrong"})
-			return
-		}
-		product.ID = id
-		product.Description = reqProduct.Description
-		products = append(products, product)
-		if err := db.Get().Create(&product).Error; err != nil {
-			c.JSON(400, gin.H{"message": "Invalid Request"})
-			return
-		}
+// AddProduct method
+func AddProduct(c *gin.Context) {
+	request := ProductRequestBody{}
+	if err := c.Bind(&request); err != nil {
+		fmt.Println(" ==== UNABLE TO BIND REQUEST ====")
+		c.JSON(400, gin.H{"message": "ERROR"})
+	}
+	request.ID = utilities.GenerateID()
+	if err := db.Get().Table("products").Create(&request).Error; err != nil {
+		fmt.Println(" ==== UNABLE TO BIND REQUEST ====")
+		c.JSON(400, err)
 	}
 
-	c.JSON(200, products)
+	c.JSON(200, request)
 }
