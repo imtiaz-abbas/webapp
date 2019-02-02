@@ -1,28 +1,52 @@
 package controllers
 
 import (
-	"net/http"
+	"github.com/satori/go.uuid"
 
 	"github.com/gin-gonic/gin"
+	"github.com/webapp/db"
 	"github.com/webapp/models"
 )
 
+// GetAllProducts method
 func GetAllProducts(c *gin.Context) {
-	err, allProducts := models.GetAllProducts()
-	if err == 0 {
-		c.JSON(404, gin.H{"error": "Error Finding Products"})
-	} else {
-		c.JSON(200, allProducts)
-	}
+	c.JSON(200, gin.H{"message": "got request"})
 }
 
-func GetProduct(c *gin.Context) {
-	id := c.Param("id")
-	product := models.Product{}
-	statusCode := product.GetProduct(id)
-	if statusCode == 1 {
-		c.JSON(200, product)
-	} else {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "No Product with ID found"})
+type AddProductsRequestBody struct {
+	Products []ProductRequestBody `json:"products"`
+}
+
+type ProductRequestBody struct {
+	Name        string `json:"name"`
+	Price       int    `json:"price"`
+	Description string `json:"description"`
+}
+
+// AddProducts method
+func AddProducts(c *gin.Context) {
+	request := &AddProductsRequestBody{}
+	c.Bind(&request)
+
+	products := make([]models.Product, 0)
+
+	for _, reqProduct := range request.Products {
+		product := models.Product{}
+		product.Name = reqProduct.Name
+		product.Price = reqProduct.Price
+		id, err := uuid.NewV4()
+		if err != nil {
+			c.JSON(400, gin.H{"message": "something went wrong"})
+			return
+		}
+		product.ID = id
+		product.Description = reqProduct.Description
+		products = append(products, product)
+		if err := db.Get().Create(&product).Error; err != nil {
+			c.JSON(400, gin.H{"message": "Invalid Request"})
+			return
+		}
 	}
+
+	c.JSON(200, products)
 }
